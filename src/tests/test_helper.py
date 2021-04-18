@@ -18,7 +18,7 @@ def softmax(h):
     return (np.exp(h.T) / np.sum(np.exp(h), axis=1)).T
 
 def binary_cross_entropy(y, p):
-    return -1 / len(y) * (-y * np.log(p) - (1 - y) * np.log(1 - p))
+    return -1 / len(y) * np.sum(-y * np.log(p) - (1 - y) * np.log(1 - p))
 
 def cross_entropy(y, p):
     # return -1 / len(y) * 
