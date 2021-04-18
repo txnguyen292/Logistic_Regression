@@ -17,6 +17,9 @@ def sigmoid(h):
 def softmax(h):
     return (np.exp(h.T) / np.sum(np.exp(h), axis=1)).T
 
+def softmax_1(h):
+    return np.exp(h) / np.sum(np.exp(h), axis=1)
+
 def binary_cross_entropy(y, p):
     return -1 / len(y) * np.sum(-y * np.log(p) - (1 - y) * np.log(1 - p))
 
@@ -39,11 +42,9 @@ def test_softmax():
     h = np.array([[1, 2, 3], [1, 2, 3], [1, 2, 3]])
     t1 = scsoftmax(h, axis=1)
     t2 = softmax(h)
+    t3 = softmax_1(h)
     assert np.allclose(t1, t2), f"Compare: {t1} vs {t2}"
+    assert np.allclose(t1, t3), f"Compare: {t1} vs {t3}"
 
 if __name__ == "__main__":
-    cc = tf.keras.losses.CategoricalCrossentropy()
-    y_true = np.array([[0, 1, 0], [0, 0, 1]])
-    y_pred = np.array([[0.05, 0.95, 0], [0.1, 0.8, 0.1]])
-    print(cc(y_true, y_pred).numpy())
-    print(cross_entropy(y_true, y_pred))
+    pass
