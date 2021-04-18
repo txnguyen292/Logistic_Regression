@@ -99,7 +99,7 @@ class LogisticRegression:
     def predict(self, X: Matrix):
         return (self.__forward(X) >= self.thresh).astype(np.int32)
 
-# multiple multicariate logistic regression
+# multiple multivariate logistic regression
 
 def softmax(h: Matrix) -> Vector:
     """
@@ -180,8 +180,15 @@ class MVLogisticRegression:
 if __name__ == "__main__":
     # assert softmax()
     from sklearn.datasets import load_iris
+    from sklearn.preprocessing import StandardScaler
     X, y = load_iris(return_X_y=True)
     # assert indices_to_one_hot(y, len(np.unique(y))) == res, "your onehot is wrong"
     data = pd.read_csv(CONFIG.data / "final" / "TripGaussKNN.csv", header = 0)
+    sc = StandardScaler()
     X = data.iloc[:, :2].to_numpy()
+    sc.fit_transform(X)
     y = data.iloc[:, -1].to_numpy()
+    lr = MVLogisticRegression()
+    lr.fit(X, y)
+    y_hat = lr.predict(X)
+    print(f"Acc: {np.mean(y == y_hat)}")
