@@ -45,7 +45,7 @@ def binary_cross_entropy(y: ArrayLike, p: ArrayLike) -> ArrayLike:
     """
     y = np.array(y)
     p = np.array(p)
-    return 1 / len(y) * (-y * np.log(p) - (1 - y) * np.log(1 - p))
+    return 1 / len(y) * np.sum(-y * np.log(p) - (1 - y) * np.log(1 - p))
 
 
 def cross_entropy(Y: ArrayLike, P_hat: ArrayLike) -> ArrayLike:
@@ -138,7 +138,7 @@ class LogisticRegression:
 
     def predict(self, X):
         return (self.__forward(X) >= self.thresh).astype(np.int32)
-        
+
 if __name__ == "__main__":
     def my_sigmoid(h):
         return 1 / (1 + np.exp(-h))
